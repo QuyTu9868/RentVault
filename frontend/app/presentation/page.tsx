@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
+import { explorerAddressUrl, targetChain } from "@/lib/chain";
+import { escrowAddress, usdcAddress } from "@/lib/escrow";
 
 export const metadata: Metadata = {
   title: "Presentation - RentVault",
@@ -8,8 +10,17 @@ export const metadata: Metadata = {
     "Rent real things with the money held by a smart contract and the arguments settled by an AI agent that cannot pay itself.",
 };
 
-const ESCROW_ADDRESS = "0xf135EB8aBC8d058e0be8e293DF478DE3287CF2DD";
-const USDC_ADDRESS = "0xdAdE9118F11fc7b57d115ee45bf282aC12F01BBf";
+/**
+ * Read for whichever chain this build points at, rather than written in by hand.
+ *
+ * These two were pasted Sepolia addresses beside a pasted sepolia.etherscan.io link. That
+ * is the page a judge is most likely to check an address on, so it is the worst page to
+ * leave showing the wrong network's contracts after a redeploy.
+ */
+const contracts = [
+  { name: "RentalEscrow", address: escrowAddress },
+  { name: "MockUSDC", address: usdcAddress },
+].filter((entry): entry is { name: string; address: `0x${string}` } => Boolean(entry.address));
 
 /**
  * The page built for a judge, not a renter. /homepage sells the product; this one shows the
@@ -178,23 +189,30 @@ export default function PresentationPage() {
           </Reveal>
 
           <Reveal delayMs={140} className="flex flex-col gap-3 rounded-card border border-line bg-surface p-6">
-            <p className="text-sm text-ink-muted">Deployed and verified on Sepolia</p>
-            <a
-              href={`https://sepolia.etherscan.io/address/${ESCROW_ADDRESS}#code`}
-              target="_blank"
-              rel="noreferrer"
-              className="text-sm text-ink-strong underline underline-offset-4"
-            >
-              RentalEscrow &middot; {ESCROW_ADDRESS.slice(0, 6)}&hellip;{ESCROW_ADDRESS.slice(-4)}
-            </a>
-            <a
-              href={`https://sepolia.etherscan.io/address/${USDC_ADDRESS}#code`}
-              target="_blank"
-              rel="noreferrer"
-              className="text-sm text-ink-strong underline underline-offset-4"
-            >
-              MockUSDC &middot; {USDC_ADDRESS.slice(0, 6)}&hellip;{USDC_ADDRESS.slice(-4)}
-            </a>
+            <p className="text-sm text-ink-muted">
+              {contracts.length
+                ? `Deployed and verified on ${targetChain.name}`
+                : `Not deployed on ${targetChain.name} yet`}
+            </p>
+            {contracts.map((contract) => {
+              const href = explorerAddressUrl(contract.address);
+              const label = `${contract.name} · ${contract.address.slice(0, 6)}…${contract.address.slice(-4)}`;
+              return href ? (
+                <a
+                  key={contract.name}
+                  href={`${href}#code`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-sm text-ink-strong underline underline-offset-4"
+                >
+                  {label}
+                </a>
+              ) : (
+                <span key={contract.name} className="text-sm text-ink-strong">
+                  {label}
+                </span>
+              );
+            })}
             <p className="mt-2 text-xs text-ink-muted">
               The contract has no admin function of any kind. No address can move a settled
               deposit, reverse a ruling, or remove a rental.

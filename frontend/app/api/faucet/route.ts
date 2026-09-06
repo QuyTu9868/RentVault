@@ -43,8 +43,14 @@ const TOP_UP = "500";
 /** Below this, top somebody up. Above it, they can afford to rent something already. */
 const ENOUGH = "100";
 
-/** Test networks only. Real money needs no faucet and this would be a hole in one. */
-const ALLOWED_CHAINS = [31337, 11155111];
+/**
+ * Test networks only. Real money needs no faucet and this would be a hole in one.
+ *
+ * 31337 local, 11155111 Sepolia, 10143 Monad Testnet. Monad mainnet is 143 and is
+ * deliberately absent: the two ids differ by a digit, and this list is the thing standing
+ * between a typo in one env var and a server wallet minting on a live chain.
+ */
+const ALLOWED_CHAINS = [31337, 11155111, 10143];
 
 export async function POST(request: Request) {
   try {
