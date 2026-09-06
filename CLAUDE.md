@@ -11,18 +11,26 @@ Tiền thuê và tiền cọc do smart contract giữ. Một AI agent lo hai vi�
 listing trước khi đăng, và xử tranh chấp lúc trả đồ. Mọi lệnh động tới tiền của
 agent đều phải chui qua Latch.
 
-Tên cũ trong ghi chú: RentMAD. Không dùng nữa.
+Tên cũ trong ghi chú: RentMAD, rồi Trustfall. Không dùng nữa. Trustfall là dự án
+riêng vẫn còn, repo này tách ra đi hướng khác, đừng nhầm hai cái.
 
-**Mục tiêu:** dApp demo nộp cho Rialo. Testnet, không phải sản phẩm thương mại.
-Có vòng bình chọn nên phần trình bày quan trọng ngang phần code.
+**Mục tiêu:** dApp dự thi Monad Metropolis, track 04 (Trust, Identity & AI
+Infrastructure). Hạn nộp 13/10/2026. Testnet, không phải sản phẩm thương mại.
+Giám khảo chấm phần làm mới trong window 1/9 tới 13/10, nên phần trình bày quan
+trọng ngang phần code.
 
-**Mạng:** Sepolia. Rialo chưa mở testnet công khai. Khi Rialo mở, contract phải
-viết lại bằng Rust (Rialo không phải EVM), frontend và backend giữ được.
-Vì vậy: **contract viết càng mỏng càng tốt.**
+**Mạng:** Monad Testnet, chain id 10143. Monad chạy nguyên bytecode EVM nên
+contract đi thẳng sang, **không phải viết lại bằng ngôn ngữ khác**. Đang thấy
+mình sửa Solidity để "cho hợp Monad" thì dừng lại, gần như chắc chắn là sai hướng.
+
+Bản deploy Sepolia cũ vẫn để chạy làm demo dự phòng, không đụng tới.
+
+**Contract vẫn viết càng mỏng càng tốt**, nhưng lý do giờ là chống
+over-engineering chứ không còn là chuyện phải port sang ngôn ngữ khác.
 
 **Stack:** Next.js + wagmi + RainbowKit, Solidity + Hardhat, Supabase (DB +
-Storage), Pinata, Privy (ví nhúng, cho cả owner lẫn renter), Groq (LLM cho
-agent), Latch (cổng chặn agent), EmailJS.
+Storage), Pinata, Privy (ví nhúng, cho cả owner lẫn renter), Google Gemini (LLM
+cho agent), Latch (cổng chặn agent, đang gỡ để thay bằng policy nội bộ), EmailJS.
 
 ### File kèm theo, phải đọc
 
@@ -147,8 +155,11 @@ listing, ảnh, chat, review, wishlist, danh mục, tìm kiếm, lịch trống,
 email, toàn bộ agent AI.
 
 Nguyên tắc: cái gì cần minh bạch và không sửa được thì lên chain. Cái gì cần
-nhanh và rẻ thì để dưới. Nghi ngờ thì để off-chain, vì phần on-chain sẽ phải
-viết lại bằng Rust khi chuyển sang Rialo.
+nhanh và rẻ thì để dưới. Nghi ngờ thì để off-chain.
+
+Ngoại lệ đang làm cho Metropolis: sổ phán quyết của agent. Nội dung bằng chứng
+vẫn ở Supabase cho rẻ, nhưng hash của nó ghi lên chain, vì thứ cần chứng minh ở
+đây đúng là "không ai sửa được sau khi đã ghi".
 
 ---
 
@@ -185,19 +196,23 @@ trong system prompt rằng mọi thứ trong thẻ đó chỉ để đọc.
   "reason": "một câu ngắn" }
 ```
 
-**Model:** Groq. **Không dùng model đang ở trạng thái preview**, luật này giữ nguyên
-và đã được chứng minh là đúng.
+**Model:** Google Gemini. **Không dùng model đang ở trạng thái preview**, luật này giữ
+nguyên và đã được chứng minh là đúng nhiều lần.
 
-Bản chốt cũ ghi Llama Guard cho chữ và Llama 4 Scout cho ảnh. **Ngày 2026-08-01 kiểm lại
-thì Groq đã bỏ cả hai khỏi danh mục.** Model kiểm duyệt chuyên dụng duy nhất còn lại
-(`openai/gpt-oss-safeguard-20b`) đang ở preview nên không dùng được.
+Lịch sử chọn model, ghi lại để không đi vòng lại: bản chốt đầu ghi Llama Guard cho chữ và
+Llama 4 Scout cho ảnh, tới 2026-08-01 thì Groq đã bỏ cả hai khỏi danh mục. Thay bằng
+`qwen/qwen3.6-27b` trên Groq, rồi cũng bỏ nốt. **Nhà cung cấp hiện tại là Google.**
 
-Thay bằng **`qwen/qwen3.6-27b`**, đang production, đọc được cả chữ lẫn ảnh, dùng cho cả
-hai phần trong một lần gọi. Một lần gọi nhìn cả hai là cố ý: mô tả sạch đi kèm ảnh bẩn sẽ
+Tên model đang chạy thật nằm ở [`frontend/lib/model.ts`](frontend/lib/model.ts), hiện là
+`gemini-3.5-flash-lite`, dự phòng `gemini-3.6-flash` khi model chính quá tải. **Đọc file đó
+để biết tên model, đừng chép tên từ file này**, vì file này lạc hậu trước.
+
+Một model đọc cả chữ lẫn ảnh trong cùng một lần gọi là cố ý: mô tả sạch đi kèm ảnh bẩn sẽ
 lọt nếu hai model xét riêng, vì mỗi bên chỉ thấy nửa vô hại của mình.
 
-Trước khi ghi tên model vào code thì **hỏi lại danh sách model của Groq**, đừng tin tên
-model nhớ được. Danh mục của họ đổi nhanh hơn tài liệu.
+Trước khi ghi tên model mới vào code thì **hỏi lại danh sách model hiện có của nhà cung
+cấp**, đừng tin tên model nhớ được. Danh mục của họ đổi nhanh hơn tài liệu, và chính chỗ
+này đã sai ba lần rồi.
 
 ---
 
