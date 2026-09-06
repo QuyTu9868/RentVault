@@ -1,4 +1,4 @@
-# UI Reference - Trustfall
+# UI Reference - RentVault
 
 Nguồn tham chiếu: bộ Airbnb Web trên Mobbin (632 màn, 151 luồng) và bộ Zillow.
 
@@ -15,7 +15,7 @@ Luồng đăng nhà của Airbnb: `Listing a home` 20 màn, `Setting up a home` 
 `Adding photos and amenities` 8 màn. Cộng lại hơn 40 màn chỉ để đăng một tin.
 
 Họ làm được vì host kiếm tiền thật nên chịu ngồi. Owner trong demo của bạn thì
-không. **Trustfall gói lại còn 3 bước:**
+không. **RentVault gói lại còn 3 bước:**
 
 1. Chọn danh mục, nhập tiêu đề, mô tả, giá theo ngày, tiền cọc
 2. Tải 2 ảnh, xem AI kiểm duyệt trả kết quả
@@ -29,7 +29,7 @@ Nếu thấy mình đang vẽ màn thứ tư thì dừng lại, gộp bớt.
 
 **Bê về, đúng cái mình cần:**
 
-| Luồng Airbnb | Dùng cho Trustfall |
+| Luồng Airbnb | Dùng cho RentVault |
 |---|---|
 | Searching homes, Filtering homes | Trang tìm kiếm, filter Category |
 | Home details, Home photo gallery | Trang chi tiết món đồ |
@@ -97,7 +97,7 @@ Máy bạn RTX 3050 4GB, và giám khảo chấm demo trên laptop bất kỳ. �
 ## 6. Chỗ Airbnb làm mà mình cố tình làm khác
 
 Airbnb giấu tổng tiền tới bước cuối. Đừng bắt chước, họ bị chửi nhiều năm vì
-chuyện này và đang phải sửa. Trustfall hiện đủ ngay trên trang chi tiết: tiền
+chuyện này và đang phải sửa. RentVault hiện đủ ngay trên trang chi tiết: tiền
 thuê, tiền cọc, phí nền tảng 1%, tổng phải trả. Minh bạch tiền vốn là lý do dự
 án này tồn tại, nên phải thể hiện ra ở chỗ nhìn thấy được.
 

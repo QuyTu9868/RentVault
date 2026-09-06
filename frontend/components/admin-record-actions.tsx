@@ -140,7 +140,7 @@ export function AdminRecordActions({
         <p className="text-xs text-ink-muted">
           {rentalId ? (
             <>
-              Deletes Trustfall&rsquo;s account of the dispute: the ruling, both statements,
+              Deletes RentVault&rsquo;s account of the dispute: the ruling, both statements,
               every photo, and the messages.{" "}
               <strong className="text-ink">
                 Rental #{rentalId} stays on the contract exactly as it is.

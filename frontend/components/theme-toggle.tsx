@@ -3,7 +3,7 @@
 import { useSyncExternalStore } from "react";
 
 export type Theme = "light" | "dark";
-const THEME_KEY = "trustfall-theme";
+const THEME_KEY = "rentvault-theme";
 
 /**
  * The current theme lives on the <html> element, not in React state.

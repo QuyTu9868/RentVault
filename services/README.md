@@ -14,7 +14,7 @@ no config file, that sort of thing.
 
 ## Where the rest of the integrations actually live
 
-Trustfall talks to six third party services. Only Supabase has a file to keep, so only
+RentVault talks to six third party services. Only Supabase has a file to keep, so only
 Supabase has a folder here. The others are code plus an environment variable, and their
 code has to sit inside `frontend/`:
 

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
-  title: "Roadmap - Trustfall",
-  description: "What is real on Trustfall today, and what a mainnet version would still need.",
+  title: "Roadmap - RentVault",
+  description: "What is real on RentVault today, and what a mainnet version would still need.",
 };
 
 /**
@@ -64,7 +64,7 @@ export default function RoadmapPage() {
 const NOW = [
   {
     title: "Escrow holds the money",
-    body: "Rent and deposit go into a smart contract the moment a rental is requested. Trustfall cannot spend them, freeze them, or lose them by going under.",
+    body: "Rent and deposit go into a smart contract the moment a rental is requested. RentVault cannot spend them, freeze them, or lose them by going under.",
   },
   {
     title: "Handover by signed QR",

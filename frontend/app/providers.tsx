@@ -52,7 +52,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         appearance: {
           theme: "light",
           accentColor: "#111111",
-          landingHeader: "Sign in to Trustfall",
+          landingHeader: "Sign in to RentVault",
           loginMessage: "Rent real things with on-chain escrow.",
         },
       }}

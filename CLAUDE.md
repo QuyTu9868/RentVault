@@ -1,4 +1,4 @@
-# CLAUDE.md - Trustfall
+# CLAUDE.md - RentVault
 
 File này là luật của dự án. Đọc trước khi làm bất cứ việc gì trong repo.
 
@@ -6,7 +6,7 @@ File này là luật của dự án. Đọc trước khi làm bất cứ việc 
 
 ## 1. Dự án là gì
 
-Trustfall là marketplace cho thuê đồ thật (nhà, xe, quần áo) với escrow on-chain.
+RentVault là marketplace cho thuê đồ thật (nhà, xe, quần áo) với escrow on-chain.
 Tiền thuê và tiền cọc do smart contract giữ. Một AI agent lo hai việc: kiểm duyệt
 listing trước khi đăng, và xử tranh chấp lúc trả đồ. Mọi lệnh động tới tiền của
 agent đều phải chui qua Latch.

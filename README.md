@@ -1,4 +1,4 @@
-# Trustfall
+# RentVault
 
 Rent real things from strangers, with the money held by a smart contract and the arguments
 settled by an AI agent that cannot pay itself.
@@ -11,7 +11,7 @@ against what mainnet would still need.
 ## What it does
 
 - **Escrow that nobody can raid.** Rent and deposit go into a contract on Sepolia the moment
-  a rental is requested. Trustfall cannot spend them, freeze them, or go under holding them.
+  a rental is requested. RentVault cannot spend them, freeze them, or go under holding them.
 - **Handover by signed code.** Collecting and returning the item are each confirmed by
   scanning a code the other person holds. It carries a nonce and an expiry, so an old
   screenshot is worth nothing.
@@ -56,7 +56,7 @@ without a single component changing.
 record about the app rather than a page that acts on anybody's behalf.
 
 It can delete, and that is worth stating plainly rather than discovering. A signed-in admin
-can remove Trustfall's account of a dispute, or a listing, so a demo does not accumulate
+can remove RentVault's account of a dispute, or a listing, so a demo does not accumulate
 test rentals nobody wants in the log. Which makes this log weaker evidence than one nothing
 can touch, and the trade is deliberate.
 
@@ -150,7 +150,7 @@ UI-REFERENCE.md   Screen layouts and which Airbnb flows to copy.
 ERROR.md          Every mistake worth not repeating, written at each commit.
 ```
 
-**There is no `backend/` folder.** Next.js is full stack, so the server side of Trustfall is
+**There is no `backend/` folder.** Next.js is full stack, so the server side of RentVault is
 a set of API routes inside `frontend/`, including the ones that hold the signing key.
 
 **`services/` is not where integration code goes.** It holds only what you paste into a

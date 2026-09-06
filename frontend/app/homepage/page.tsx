@@ -4,7 +4,7 @@ import { LandingCta } from "@/components/landing-cta";
 import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
-  title: "Trustfall - rent real things with on-chain escrow",
+  title: "RentVault - rent real things with on-chain escrow",
   description:
     "Rent and deposit are held by a smart contract. Both sides scan a code to hand over. Disputes are read by an agent that cannot pay itself.",
 };
@@ -36,7 +36,7 @@ export default function LandingPage() {
             Get it back, or get paid.
           </h1>
           <p className="max-w-2xl text-lg text-ink-muted">
-            Trustfall holds the rent and the deposit in a smart contract until both sides
+            RentVault holds the rent and the deposit in a smart contract until both sides
             agree the item changed hands. No company sits in the middle holding your money,
             and nobody has to be trusted for it to work.
           </p>
@@ -249,7 +249,7 @@ function Mark({ children }: { children: React.ReactNode }) {
 const FEATURES = [
   {
     title: "The money is not ours to lose",
-    body: "Rent and deposit go straight into a contract on chain. Trustfall cannot spend them, freeze them, or go under holding them. You can read the code that decides where they end up.",
+    body: "Rent and deposit go straight into a contract on chain. RentVault cannot spend them, freeze them, or go under holding them. You can read the code that decides where they end up.",
     Mark: () => (
       <Mark>
         <rect x="8" y="18" width="32" height="22" rx="3" />

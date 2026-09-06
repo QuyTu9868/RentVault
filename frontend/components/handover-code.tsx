@@ -64,7 +64,7 @@ export function ShowHandoverCode({
       // in RentalEscrow.t.sol, which rebuild this same digest and would fail if it drifted.
       const signature = await signTypedData(config, {
         domain: {
-          name: "Trustfall",
+          name: "RentVault",
           version: "1",
           chainId: targetChain.id,
           verifyingContract: escrowAddress,

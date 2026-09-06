@@ -1,5 +1,5 @@
 {
-  "name": "trustfall",
+  "name": "rentvault",
   "private": true,
   "type": "module",
   "description": "Root scripts only. The real packages are contracts/ and frontend/, each with its own dependencies.",

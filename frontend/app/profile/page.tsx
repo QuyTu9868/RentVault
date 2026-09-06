@@ -29,7 +29,7 @@ function money(value: bigint) {
 }
 
 function hiddenRentalsKey(address: string) {
-  return `trustfall:hidden-rentals:${address.toLowerCase()}`;
+  return `rentvault:hidden-rentals:${address.toLowerCase()}`;
 }
 
 /**

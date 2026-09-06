@@ -88,6 +88,6 @@ export function verifyCode(secret: string, code: string) {
 }
 
 /** The string an Authenticator app reads out of a QR code. */
-export function otpauthUri(secret: string, label = "Trustfall admin") {
-  return `otpauth://totp/${encodeURIComponent(label)}?secret=${secret}&issuer=Trustfall`;
+export function otpauthUri(secret: string, label = "RentVault admin") {
+  return `otpauth://totp/${encodeURIComponent(label)}?secret=${secret}&issuer=RentVault`;
 }

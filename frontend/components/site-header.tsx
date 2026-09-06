@@ -34,7 +34,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-10 border-b border-line bg-canvas/90 backdrop-blur">
       <div className="mx-auto flex h-14 w-full max-w-[90rem] items-center gap-8 px-6">
         <Link href={landing ? "/homepage" : "/"} className="font-display text-xl text-ink-strong">
-          Trustfall
+          RentVault
         </Link>
 
         <nav className="flex items-center gap-6 text-sm">

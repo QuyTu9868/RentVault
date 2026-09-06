@@ -167,7 +167,7 @@ async function main() {
 
   // ---- 3. Check-in: owner signs, renter sends ------------------------------
   console.log("\n3. Check-in, owner shows the code and the renter submits it");
-  const domain = { name: "Trustfall", version: "1", chainId: hardhat.id, verifyingContract: escrowAddress };
+  const domain = { name: "RentVault", version: "1", chainId: hardhat.id, verifyingContract: escrowAddress };
   let handoverNonce = (await pub.readContract({ address: escrowAddress, abi: escrowAbi, functionName: "rentalNonce", args: [id] })) as bigint;
   let deadline = BigInt((await pub.getBlock()).timestamp) + 600n;
 
@@ -354,7 +354,7 @@ async function runShortRental(
   const id = ((await pub.readContract({ address: escrow, abi: escrowAbi, functionName: "nextRentalId" })) as bigint) - 1n;
   await wait(await ownerWallet.writeContract({ account: owner, chain: hardhat, address: escrow, abi: escrowAbi, functionName: "approveRental", args: [id] }), "approveRental");
 
-  const domain = { name: "Trustfall", version: "1", chainId: hardhat.id, verifyingContract: escrow };
+  const domain = { name: "RentVault", version: "1", chainId: hardhat.id, verifyingContract: escrow };
   const sign = async (wallet: Wallet, account: Account, action: "checkIn" | "checkOut") => {
     const handoverNonce = (await pub.readContract({ address: escrow, abi: escrowAbi, functionName: "rentalNonce", args: [id] })) as bigint;
     const deadline = BigInt((await pub.getBlock()).timestamp) + 600n;

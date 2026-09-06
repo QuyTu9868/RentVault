@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/reveal";
 
 export const metadata: Metadata = {
-  title: "Presentation - Trustfall",
+  title: "Presentation - RentVault",
   description:
     "Rent real things with the money held by a smart contract and the arguments settled by an AI agent that cannot pay itself.",
 };
@@ -32,7 +32,7 @@ export default function PresentationPage() {
             An AI agent that can rule on your money, and never touch it.
           </h1>
           <p className="max-w-2xl text-lg text-ink-muted">
-            Trustfall is a rental marketplace where the rent and deposit sit in a smart
+            RentVault is a rental marketplace where the rent and deposit sit in a smart
             contract, not with the company. When two sides argue over a returned item, a
             language model reads the evidence and proposes a verdict. It never holds a key
             and never states an amount. Every command it sends has to pass a policy gateway

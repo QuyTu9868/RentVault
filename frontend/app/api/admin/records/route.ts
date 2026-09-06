@@ -19,7 +19,7 @@ import {
  * What it cannot do is the important half. Rentals live on the contract, which has no admin
  * function at all: nothing here moves a deposit, reverses a settlement, or removes a rental.
  * Deleting the record of a dispute leaves the dispute itself on Sepolia, with the same money
- * in the same place, readable by anybody with the rental id. So this deletes Trustfall's
+ * in the same place, readable by anybody with the rental id. So this deletes RentVault's
  * account of what happened and never what happened.
  *
  * That asymmetry is the honest description of it: the chain is the source of truth, and this
@@ -133,7 +133,7 @@ export async function DELETE(request: Request) {
 /**
  * Edits a listing, and only a listing.
  *
- * Listings are Trustfall's own data, written before any money exists and changeable without
+ * Listings are RentVault's own data, written before any money exists and changeable without
  * contradicting anything. A rental is the opposite: its price, deposit and dates were
  * arguments to a transaction that has already been mined, so an edit here would only ever
  * produce a page that disagrees with the chain.

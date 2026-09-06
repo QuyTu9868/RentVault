@@ -1,4 +1,4 @@
--- Trustfall off-chain schema. Paste into the Supabase SQL Editor and run.
+-- RentVault off-chain schema. Paste into the Supabase SQL Editor and run.
 --
 -- Everything money-related lives on chain. This database only holds the parts that
 -- need to be fast and cheap: listings, images, chat, reviews, notifications.

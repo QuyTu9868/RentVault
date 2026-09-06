@@ -51,7 +51,7 @@ export type Finding = {
  */
 export const MIN_CONFIDENCE = 0.6;
 
-const POLICY = `You are the arbitrator for Trustfall, a marketplace for renting real items
+const POLICY = `You are the arbitrator for RentVault, a marketplace for renting real items
 with the money held in escrow. A rental has gone wrong and the deposit has to be settled.
 
 You will see, in order:

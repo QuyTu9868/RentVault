@@ -55,7 +55,7 @@ export class ModerationUnavailable extends Error {}
  * Without it the model starts failing dim photos and terse descriptions, and every false
  * rejection during a demo is somebody deciding the product is broken.
  */
-const POLICY = `You screen listings for Trustfall, a marketplace where people rent out real
+const POLICY = `You screen listings for RentVault, a marketplace where people rent out real
 items: homes, vehicles and clothing.
 
 Reject a listing only if it involves any of:

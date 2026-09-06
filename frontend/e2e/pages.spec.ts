@@ -18,7 +18,7 @@ const SHOTS = join(process.cwd(), "e2e", "shots");
  * blank area somebody would have to notice by eye.
  */
 const PUBLIC_PAGES = [
-  { path: "/homepage", name: "homepage", expect: /Trustfall|rent/i },
+  { path: "/homepage", name: "homepage", expect: /RentVault|rent/i },
   { path: "/", name: "index", expect: /./ },
   { path: "/list", name: "list", expect: /./ },
   { path: "/rentals", name: "rentals", expect: /./ },

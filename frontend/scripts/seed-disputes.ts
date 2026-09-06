@@ -474,7 +474,7 @@ async function main() {
     );
 
     // Check-in: the owner signs the code, the renter is the one who sends it.
-    const domain = { name: "Trustfall", version: "1", chainId: sepolia.id, verifyingContract: escrow };
+    const domain = { name: "RentVault", version: "1", chainId: sepolia.id, verifyingContract: escrow };
     const handover = async (kind: "checkIn" | "checkOut") => {
       const handoverNonce = (await pub.readContract({
         address: escrow,

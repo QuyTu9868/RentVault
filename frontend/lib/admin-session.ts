@@ -11,7 +11,7 @@ import { verifyCode } from "./totp";
  * means losing that secret loses both, and losing it already means somebody can generate
  * codes anyway.
  */
-const COOKIE = "trustfall-admin";
+const COOKIE = "rentvault-admin";
 const HOURS = 2;
 
 function secret() {

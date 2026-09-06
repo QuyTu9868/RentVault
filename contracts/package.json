@@ -1,7 +1,7 @@
 {
-  "name": "trustfall-contracts",
+  "name": "rentvault-contracts",
   "version": "0.1.0",
-  "description": "Trustfall escrow contracts. Foundry for tests, Hardhat for compile and deploy.",
+  "description": "RentVault escrow contracts. Foundry for tests, Hardhat for compile and deploy.",
   "private": true,
   "scripts": {
     "compile": "hardhat compile",

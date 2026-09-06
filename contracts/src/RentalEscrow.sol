@@ -7,7 +7,7 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {ECDSA} from "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import {EIP712} from "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 
-/// @title Trustfall rental escrow
+/// @title RentVault rental escrow
 /// @notice Holds rent and deposit for one rental and releases them as both sides
 ///         confirm each step. Listings themselves live off chain in Supabase, so this
 ///         contract knows nothing about what is being rented or what it should cost.
@@ -186,7 +186,7 @@ contract RentalEscrow is EIP712 {
     error BadSignature(address expected, address recovered);
     error DayNotAvailable(uint256 day, uint256 takenBy);
 
-    constructor(IERC20 usdc_, address treasury_, address agent_) EIP712("Trustfall", "1") {
+    constructor(IERC20 usdc_, address treasury_, address agent_) EIP712("RentVault", "1") {
         if (address(usdc_) == address(0) || treasury_ == address(0) || agent_ == address(0)) {
             revert ZeroAddress();
         }
