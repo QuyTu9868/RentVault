@@ -52,6 +52,21 @@ export function ShowHandoverCode({
         chainId: targetChain.id,
       })) as bigint;
 
+      // The escrow's own EIP-712 domain, read from the escrow rather than written in here.
+      //
+      // This was the literal "Trustfall", and the rename turned it into "RentVault" while
+      // the deployed contract still carried the old name. Nothing caught it: the wallet
+      // signed happily, the shape was right, and the contract rejected every code, because
+      // the domain name is part of the digest the signature is checked against. Reading it
+      // means the name is whatever the contract this build talks to actually says it is,
+      // which is also how the USDC permit path already does it.
+      const domain = (await readContract(config, {
+        address: escrowAddress,
+        abi: escrowAbi,
+        functionName: "eip712Domain",
+        chainId: targetChain.id,
+      })) as [string, string, string, bigint, `0x${string}`, `0x${string}`, bigint[]];
+
       const deadline = BigInt(
         // Chain time. The contract checks this deadline against block.timestamp, so a
         // code dated by the browser is born expired on any chain that has been wound
@@ -64,8 +79,8 @@ export function ShowHandoverCode({
       // in RentalEscrow.t.sol, which rebuild this same digest and would fail if it drifted.
       const signature = await signTypedData(config, {
         domain: {
-          name: "RentVault",
-          version: "1",
+          name: domain[1],
+          version: domain[2],
           chainId: targetChain.id,
           verifyingContract: escrowAddress,
         },

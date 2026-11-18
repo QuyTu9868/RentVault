@@ -474,7 +474,15 @@ async function main() {
     );
 
     // Check-in: the owner signs the code, the renter is the one who sends it.
-    const domain = { name: "RentVault", version: "1", chainId: sepolia.id, verifyingContract: escrow };
+    // Read from the escrow, not written in. A hardcoded domain name has to match the
+    // deployed contract exactly, and when it stopped matching every signature here was
+    // built correctly and rejected anyway, because the name goes into the digest.
+    const escrowDomain = (await pub.readContract({
+      address: escrow,
+      abi: escrowAbi,
+      functionName: "eip712Domain",
+    })) as [string, string, string, bigint, `0x${string}`, `0x${string}`, bigint[]];
+    const domain = { name: escrowDomain[1], version: escrowDomain[2], chainId: sepolia.id, verifyingContract: escrow };
     const handover = async (kind: "checkIn" | "checkOut") => {
       const handoverNonce = (await pub.readContract({
         address: escrow,
