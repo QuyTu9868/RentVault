@@ -46,11 +46,11 @@ const ENOUGH = "100";
 /**
  * Test networks only. Real money needs no faucet and this would be a hole in one.
  *
- * 31337 local, 11155111 Sepolia, 10143 Monad Testnet. Monad mainnet is 143 and is
- * deliberately absent: the two ids differ by a digit, and this list is the thing standing
- * between a typo in one env var and a server wallet minting on a live chain.
+ * 31337 local and 11155111 Sepolia, and nothing else. This list is the thing standing
+ * between a typo in one env var and a server wallet minting on a chain that charges real
+ * money for it, so it names chains rather than asking whether one is a testnet.
  */
-const ALLOWED_CHAINS = [31337, 11155111, 10143];
+const ALLOWED_CHAINS = [31337, 11155111];
 
 export async function POST(request: Request) {
   try {

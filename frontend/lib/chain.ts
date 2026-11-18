@@ -1,4 +1,4 @@
-import { hardhat, monadTestnet, sepolia } from "viem/chains";
+import { hardhat, sepolia } from "viem/chains";
 
 /**
  * The one chain this build of the app talks to. Local development runs on the Hardhat
@@ -7,12 +7,13 @@ import { hardhat, monadTestnet, sepolia } from "viem/chains";
  * Kept in one place because half a dozen screens will need to compare against it, and a
  * chain id copied around by hand is a chain id that eventually disagrees with itself.
  *
- * Monad Testnet is 10143 and is where this project is going. Sepolia stays in the list
- * because that deployment is still up and still works, and dropping it from here would
- * break the older demo for no gain. Monad runs EVM bytecode, so nothing above this line
- * had to change to reach it beyond naming it.
+ * Sepolia is the deployed chain and the one a demo runs on. Monad Testnet was added here
+ * for a hackathon entry and has been taken out again: nothing is deployed there, so a
+ * wallet offered that chain lands on an app with no escrow and no token, which looks like
+ * the app is broken rather than like a chain with nothing on it. The Hardhat network for
+ * it is still in contracts/hardhat.config.js, so putting it back is one import.
  */
-export const supportedChains = [hardhat, sepolia, monadTestnet] as const;
+export const supportedChains = [hardhat, sepolia] as const;
 
 const configuredId = Number(process.env.NEXT_PUBLIC_CHAIN_ID ?? hardhat.id);
 
@@ -38,20 +39,12 @@ export const localRpcUrl = "http://127.0.0.1:8545";
  * assembled at runtime is not replaced, and reads as undefined in the browser with no
  * error to say why.
  *
- * Falls through to undefined when nothing is set, which hands viem the chain's own default
- * endpoint. On Monad that default is a real public node and is fine to start on. On Sepolia
- * it is a shared public-good endpoint that answers 429 within minutes of the rentals page
- * polling, so that one wants a key of its own.
+ * Falls through to undefined when neither is set, which hands viem Sepolia's own default:
+ * a shared public-good endpoint that answers 429 within minutes of the rentals page
+ * polling. Good enough for a first run, not good enough to demo on.
  */
 export function rpcUrl(): string | undefined {
   if (targetChain.id === hardhat.id) return localRpcUrl;
-  if (targetChain.id === monadTestnet.id) {
-    return (
-      process.env.MONAD_RPC_URL ||
-      process.env.NEXT_PUBLIC_MONAD_RPC_URL ||
-      undefined
-    );
-  }
   return (
     process.env.SEPOLIA_RPC_URL ||
     process.env.NEXT_PUBLIC_SEPOLIA_RPC_URL ||
