@@ -3,21 +3,15 @@
 Rent real things from strangers, with the money held by a smart contract and the arguments
 settled by an AI agent that cannot pay itself.
 
-Entered in the Monad Metropolis hackathon, track 04, Trust, Identity and AI Infrastructure.
-
 RentVault continues from Trustfall, an earlier project of mine, and this repo keeps that
-commit history rather than starting clean. Everything dated before September 2026 is
-groundwork built outside the hackathon window; the Metropolis work sits on top of it and is
-dated inside. Reading the log tells you which is which, which is the point of keeping it.
+commit history rather than starting clean.
 
 Live demo: **https://trustfall-latch.vercel.app**
-[`/presentation`](https://trustfall-latch.vercel.app/presentation) walks through the design
-for a judge; [`/roadmap`](https://trustfall-latch.vercel.app/roadmap) says what is real today
-against what mainnet would still need.
+[`/presentation`](https://trustfall-latch.vercel.app/presentation) walks through the design;
+[`/roadmap`](https://trustfall-latch.vercel.app/roadmap) says what is real today against what
+mainnet would still need.
 
-That deployment is still on Sepolia and still carries the old name in its URL. It is left
-running and untouched while the Monad port happens beside it, so there is always a working
-thing to click.
+The URL still carries the old project name. It runs on Sepolia and is left alone.
 
 ## What it does
 
@@ -205,27 +199,16 @@ cannot be passed by anyone is not a policy, it is a deleted feature.
 The policy is in [`services/latch/`](services/latch/), because a policy that exists only as
 boxes ticked on somebody else's dashboard is a policy nobody can review.
 
-## What is being built for Metropolis
+## Two things to know before running it
 
-Three things, in this order. None of them is finished yet, and this section says so rather
-than describing them as though they were.
+**You need Sepolia ETH of your own.** The faucet here mints test USDC and nothing else:
+there is no gas faucet and no sponsorship, and the client sends its own transactions, so a
+freshly made embedded wallet holds 500 USDC and cannot spend any of it. Fund the wallets you
+intend to use first, with `npm run fund:sepolia` from `contracts/`, which sends 0.02 ETH to
+each address in `DEV_WALLETS`.
 
-**The move to Monad.** Monad runs EVM bytecode, so the contracts go across without being
-rewritten. The work is redeploying, repointing the wallet and explorer links, and testing
-the whole rental cycle again on chain 10143. The one place this is not free is the handover
-signature: its EIP-712 domain carries a chain id, so the permit and code-signing paths get
-walked through by hand rather than assumed.
-
-**A policy that belongs to this repo.** The six filters currently live at a vendor. They are
-being rewritten as plain functions here, with tests in CI covering the rules worth
-distrusting, starting with the 0.9 bar on pay_owner and the requirement that a filter which
-throws denies rather than passes. The vendor version stays in the tree for comparison, so
-this reads as moving a rule rather than quietly dropping one.
-
-**A ruling log that does not need trusting.** The paragraph above admits an admin can delete
-this project's account of a dispute. The fix is to stop asking anyone to take that on faith:
-each ruling writes a record on chain carrying the rental id, the verdict, the confidence,
-and a hash of the evidence bundle it was based on. The bundle itself stays in Postgres,
-where it is cheap. A public page recomputes the hash from what is stored and holds it
-against the chain, so editing the stored copy shows up as a mismatch to anybody who looks,
-including someone who does not trust me.
+**The gateway hop is a formality unless you configure it.** `LATCH_PROXY_URL` normally
+points back at this same app, which means the agent's proposals take the HTTP hop the
+architecture requires but nothing inspects them on the way. The policy described below is
+real and reviewable in `services/latch/`, but whether anything is enforcing it depends on
+where that variable points. Worth saying plainly rather than letting a diagram imply it.

@@ -14,23 +14,31 @@ agent đều phải chui qua Latch.
 Tên cũ trong ghi chú: RentMAD, rồi Trustfall. Không dùng nữa. Trustfall là dự án
 riêng vẫn còn, repo này tách ra đi hướng khác, đừng nhầm hai cái.
 
-**Mục tiêu:** dApp dự thi Monad Metropolis, track 04 (Trust, Identity & AI
-Infrastructure). Hạn nộp 13/10/2026. Testnet, không phải sản phẩm thương mại.
-Giám khảo chấm phần làm mới trong window 1/9 tới 13/10, nên phần trình bày quan
-trọng ngang phần code.
+**Mục tiêu:** dApp demo để thuyết trình. Testnet, không phải sản phẩm thương mại.
+Phần trình bày quan trọng ngang phần code, nên thứ gì hiện trên màn hình lúc demo
+mà sai hoặc chết là lỗi nặng hơn một tính năng còn thiếu.
 
-**Mạng:** Monad Testnet, chain id 10143. Monad chạy nguyên bytecode EVM nên
-contract đi thẳng sang, **không phải viết lại bằng ngôn ngữ khác**. Đang thấy
-mình sửa Solidity để "cho hợp Monad" thì dừng lại, gần như chắc chắn là sai hướng.
+Từng nhắm dự thi Monad Metropolis track 04, nhưng hạn nộp 13/10/2026 đã qua và
+giải công bố 3/11/2026. **Hackathon đó xong rồi, đừng lên kế hoạch theo nó nữa.**
 
-Bản deploy Sepolia cũ vẫn để chạy làm demo dự phòng, không đụng tới.
+**Mạng:** Sepolia, chain id 11155111. Contract đã deploy và verify ở đó, địa chỉ
+trong `frontend/lib/deployed.json`.
 
-**Contract vẫn viết càng mỏng càng tốt**, nhưng lý do giờ là chống
-over-engineering chứ không còn là chuyện phải port sang ngôn ngữ khác.
+Có một nhánh `feat/monad-port` thêm cấu hình Monad Testnet (10143), nhưng **chưa
+bao giờ deploy lên Monad** và Monad đã bị bỏ khỏi danh sách chain mà ví chọn được,
+vì chain không có contract nào thì vào đó app trông như hỏng. Cấu hình Hardhat cho
+Monad vẫn còn trong `contracts/hardhat.config.js`, nằm im, không ảnh hưởng gì.
 
-**Stack:** Next.js + wagmi + RainbowKit, Solidity + Hardhat, Supabase (DB +
-Storage), Pinata, Privy (ví nhúng, cho cả owner lẫn renter), Google Gemini (LLM
-cho agent), Latch (cổng chặn agent, đang gỡ để thay bằng policy nội bộ), EmailJS.
+**Contract viết càng mỏng càng tốt**, lý do là chống over-engineering.
+
+**Stack thật, đã đối chiếu với code:** Next.js + wagmi + viem, Solidity + Hardhat
+(deploy) + Foundry (test), Supabase (DB + Storage), Privy (ví nhúng, cho cả owner
+lẫn renter), Google Gemini (LLM cho agent), Latch (cổng chặn agent).
+
+**Ba thứ bản cũ của file này ghi mà code không hề dùng, đã bỏ khỏi danh sách:**
+RainbowKit (Privy tự quản danh sách ví, grep ra 0 chỗ dùng), Pinata (0 chỗ dùng,
+ảnh nằm ở Supabase Storage), EmailJS (0 chỗ dùng, không có email nào được gửi).
+Đừng tin là chúng có sẵn rồi viết code gọi vào.
 
 ### File kèm theo, phải đọc
 
@@ -129,7 +137,7 @@ code đã viết xong.
 | 5 | Trang tìm kiếm, filter danh mục, trang chi tiết, gợi ý giá | Tìm ra tin vừa đăng, trang chi tiết hiện đủ tiền thuê + cọc + phí + tổng |
 | 6 | Luồng thuê: request, approve, tiền vào escrow (gộp permit), QR check-in | Một vòng thuê đi hết tới trạng thái Đang thuê trên chain local |
 | 7 | QR check-out, nhả tiền, review hai chiều, đồng hồ đếm ngược | Vòng thuê đi hết tới Hoàn tất, tiền chia đúng, review mở ra được |
-| 8 | Chat hai bên, thông báo, email | Hai tài khoản nhắn được cho nhau, owner nhận mail khi có yêu cầu mới |
+| 8 | Chat hai bên, thông báo (**email KHÔNG làm**) | Hai tài khoản nhắn được cho nhau, thông báo trong app chạy. Phần email bỏ, không có EmailJS trong code |
 | 9 | Agent kiểm duyệt listing bằng Groq, chạy local, **chưa cắm Latch** | Đăng tin bẩn thì bị từ chối kèm lý do, sửa lại nộp được |
 | 10 | Agent xử tranh chấp: Groq đọc 2 ảnh, trả JSON, **server ký**, contract tự tính tiền | Mở tranh chấp trên chain local, agent phán, tiền chia đúng 1 trong 3 mức |
 | 11 | Cắm Latch vào trước cả hai agent | Simulate chạy đủ ca, gồm ca gửi thêm field lạ; đổi `LATCH_PROXY_URL` sang Latch mà luồng vẫn chạy |
@@ -157,9 +165,10 @@ email, toàn bộ agent AI.
 Nguyên tắc: cái gì cần minh bạch và không sửa được thì lên chain. Cái gì cần
 nhanh và rẻ thì để dưới. Nghi ngờ thì để off-chain.
 
-Ngoại lệ đang làm cho Metropolis: sổ phán quyết của agent. Nội dung bằng chứng
-vẫn ở Supabase cho rẻ, nhưng hash của nó ghi lên chain, vì thứ cần chứng minh ở
-đây đúng là "không ai sửa được sau khi đã ghi".
+Từng có kế hoạch ghi hash sổ phán quyết của agent lên chain cho hackathon.
+**Chưa làm, và đã bỏ** vì hackathon kết thúc. Hệ quả phải nói thật khi thuyết
+trình: log phán quyết nằm ở Supabase và admin xóa được, nên phần đó người dùng
+vẫn phải tin backend. Tiền thì không, tiền nằm trong contract.
 
 ---
 
@@ -231,8 +240,13 @@ Rental Pass NFT và cron burn (kéo theo cron chạy thật, ví trả gas, hàm
 permissionless cần soi bảo mật, mà không thêm gì cho câu chuyện).
 
 **Không làm, giải thích khi bị hỏi:**
-bản đồ và lọc theo vị trí, bảo hiểm, xác minh danh tính, cọc chia bậc theo giá
+lọc và tìm kiếm theo vị trí, bảo hiểm, xác minh danh tính, cọc chia bậc theo giá
 trị món đồ, đa ngôn ngữ, nhiều admin, token thưởng.
+
+Sửa lại cho khớp code: mục này từng ghi "bản đồ" vào nhóm không làm, nhưng **bản
+đồ đã làm rồi**, có `pin-picker`, `pickup-area`, và hai route `geocode` với
+`places`. Owner ghim được một điểm chính xác trên bản đồ. Thứ không làm là *lọc
+và tìm theo vị trí*, khác nhau.
 
 ---
 
@@ -243,8 +257,16 @@ trị món đồ, đa ngôn ngữ, nhiều admin, token thưởng.
 - Huỷ trước approve: hoàn 100%. Huỷ sau approve: trừ 10% tiền thuê
 - Timeout: 3 ngày sau khi kết thúc mà không ai khiếu nại thì nhả cọc
 - Đơn vị thuê: theo ngày, cho cả ba danh mục
-- Faucet gas: 0.01 ETH mỗi địa chỉ, mỗi địa chỉ một lần, trần 20 lần một ngày.
-  Khoá để trên server, không đưa cho agent
+- Faucet USDC: tự mint 500 USDC cho ai đăng nhập mà đang giữ dưới 100. Khoá ký
+  để trên server, không đưa cho agent. Đây là `/api/faucet`
+- **Faucet gas thì KHÔNG tồn tại.** Bản cũ của file này ghi "0.01 ETH mỗi địa
+  chỉ", nhưng không có dòng code nào gửi ETH và cũng không bật gas sponsorship.
+  Người dùng tự trả gas: `use-request-rental.ts`, `rental-card.tsx` và
+  `scan-handover.tsx` đều gọi `writeContract` từ phía client.
+  Nghĩa là **ví đăng nhập bằng email mới tạo có 0 ETH thì không thuê được gì.**
+  Cách nạp hiện có là chạy tay `npm run fund:sepolia` trong `contracts/`, nó
+  gửi 0.02 ETH cho từng địa chỉ liệt kê ở `DEV_WALLETS`. Trước khi demo phải
+  nạp sẵn ví sẽ dùng
 - Tiền thuê giữ trong escrow tới lúc check-in, không trả thẳng owner lúc approve
 - Review chỉ mở khi rental ở trạng thái Completed
 
