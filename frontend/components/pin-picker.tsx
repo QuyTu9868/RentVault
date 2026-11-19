@@ -42,16 +42,23 @@ export function PinPicker({
 
       const start: [number, number] = [lat ?? 16.05, lng ?? 108.2];
       const instance = L.map(container.current).setView(start, lat && lng ? 15 : 5);
-      // CARTO rather than OpenStreetMap's own tile server. OSM's is meant for light,
-      // occasional use and blocks traffic it does not recognise; CARTO's basemap tiles are
-      // free, need no key, and are meant to be embedded in exactly this kind of app. Voyager
-      // over the plain grey style: it draws roads and labels, closer to what somebody
-      // expects a map to look like than a flat colour with a dot on it.
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
-        attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
-        maxZoom: 19,
-        subdomains: "abcd",
-      }).addTo(instance);
+      // Esri's World Street Map. Two providers failed here before this one:
+      //
+      // CARTO's basemaps were chosen because they needed no key, until CARTO began
+      // requiring one, and every tile came back as a grey square stamped "API KEY
+      // REQUIRED". OpenStreetMap's own server was next, and some networks resolve
+      // tile.openstreetmap.org to 127.0.0.1, so the map stayed blank with no error on
+      // the page. Esri serves from a large commercial CDN that nothing blocks, needs no
+      // key for light use, and asks only for attribution.
+      //
+      // Note the order: Esri's path is z/y/x, not OSM's z/x/y.
+      L.tileLayer(
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",
+        {
+          attribution: "Tiles &copy; Esri",
+          maxZoom: 19,
+        }
+      ).addTo(instance);
 
       const place = (position: [number, number]) => {
         if (marker.current) {
