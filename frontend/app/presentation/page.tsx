@@ -36,9 +36,6 @@ export default function PresentationPage() {
     <main className="flex flex-col gap-24 pb-12">
       <section className="flex flex-col gap-6 pt-8 md:pt-16">
         <Reveal className="flex flex-col gap-6">
-          <p className="text-sm tracking-wide text-ink-muted uppercase">
-            Running on Sepolia
-          </p>
           <h1 className="max-w-4xl text-5xl leading-[1.1] md:text-7xl">
             An AI agent that can rule on your money, and never touch it.
           </h1>

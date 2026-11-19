@@ -26,9 +26,9 @@ export function DepositCountdown({ releaseAt }: { releaseAt: bigint }) {
   const seconds = left % 60;
 
   return (
-    <div className="flex flex-col gap-0.5">
+    <div className="flex flex-col gap-2">
       <span className="text-xs text-ink-muted">Deposit returns in</span>
-      <span className="tabular text-2xl">
+      <span className="tabular text-4xl leading-none tracking-tight text-ink-strong">
         {days > 0 && `${days}d `}
         {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}:
         {String(seconds).padStart(2, "0")}

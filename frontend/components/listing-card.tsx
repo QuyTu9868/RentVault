@@ -25,15 +25,16 @@ export function ListingCard({ listing, priority }: { listing: Listing; priority?
       )}
 
       <div className="flex flex-col gap-0.5">
-        <span className="text-xs tracking-wide text-ink-muted uppercase">
-          {CATEGORY_LABELS[listing.category]}
-        </span>
-        <span className="text-sm group-hover:underline">{listing.title}</span>
+        {/* Title first: it is what somebody scanning a grid is looking for. The category
+            moves down into the metadata line beside the deposit, rather than sitting above
+            the title as a shouted label. */}
+        <span className="text-sm text-ink-strong group-hover:underline">{listing.title}</span>
         <span className="text-sm">
           <span className="tabular">{Number(listing.price_per_day).toFixed(2)}</span> USDC
           <span className="text-ink-muted"> per day</span>
         </span>
         <span className="text-xs text-ink-muted">
+          {CATEGORY_LABELS[listing.category]} ·{" "}
           <span className="tabular">{Number(listing.deposit).toFixed(2)}</span> USDC deposit
         </span>
       </div>

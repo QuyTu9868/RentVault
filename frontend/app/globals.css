@@ -195,6 +195,46 @@ h3 {
 }
 
 /*
+  The parts of the page the browser draws unless told otherwise: selected text, the focus
+  ring, the caret, the scrollbar, link underlines. Left at their defaults they are the blue
+  of no design system, and they are exactly what a keyboard user or somebody copying an
+  address sees most. Drawn from the same variables as everything else, so dark follows.
+*/
+::selection {
+  background: var(--color-ink-strong);
+  color: var(--color-canvas);
+}
+
+html {
+  caret-color: var(--color-ink-strong);
+  scrollbar-color: var(--color-line) transparent;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink-strong);
+  outline-offset: 2px;
+}
+
+a {
+  text-underline-offset: 0.2em;
+}
+
+/*
+  Headings balance their lines so a long title does not end on one stranded word, and
+  body copy avoids a lone last word. Both are progressive: a browser that ignores them
+  wraps as it always did.
+*/
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/*
   Amounts, addresses and dates only line up in a monospace face with tabular figures.
   Money that jitters as it updates looks broken.
 */

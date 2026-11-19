@@ -36,10 +36,8 @@ export default async function ListingPage(props: {
       <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_20rem]">
         <div className="flex flex-col gap-6">
           <header className="flex flex-col gap-1">
-            <span className="text-xs tracking-wide text-ink-muted uppercase">
-              {CATEGORY_LABELS[listing.category]}
-            </span>
             <h1 className="text-3xl">{listing.title}</h1>
+            <p className="text-sm text-ink-muted">{CATEGORY_LABELS[listing.category]}</p>
           </header>
 
           {/* Two photos, side by side, no scrolling carousel. UI-REFERENCE.md section 5

@@ -17,7 +17,6 @@ export default function RoadmapPage() {
     <main className="flex flex-col gap-20 py-8 md:py-16">
       <section className="flex flex-col gap-4">
         <Reveal className="flex flex-col gap-4">
-          <p className="text-sm tracking-wide text-ink-muted uppercase">Roadmap</p>
           <h1 className="max-w-3xl text-4xl leading-[1.15] md:text-5xl">
             What is real today, and what mainnet would still need.
           </h1>

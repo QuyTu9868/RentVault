@@ -54,8 +54,8 @@ export default function PublicProfilePage({
   return (
     <main className="flex flex-col gap-6">
       <div className="flex flex-col gap-1">
-        <span className="text-xs tracking-wide text-ink-muted uppercase">Profile</span>
-        <h1 className="tabular text-2xl break-all">{address}</h1>
+        <h1 className="text-3xl">Profile</h1>
+        <p className="tabular text-sm break-all text-ink-muted">{address}</p>
         {average !== null && (
           <div className="mt-2 flex items-center gap-2 text-sm">
             <span className="tabular text-ink-strong">{average.toFixed(1)}</span>

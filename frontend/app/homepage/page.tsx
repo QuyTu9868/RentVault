@@ -27,9 +27,6 @@ export default function LandingPage() {
     <main className="flex flex-col gap-24 pb-12">
       <section className="flex flex-col gap-8 pt-8 md:pt-16">
         <Reveal hero className="flex flex-col gap-6">
-          <p className="text-sm tracking-wide text-ink-muted uppercase">
-            Escrow for renting real things
-          </p>
           <h1 className="max-w-4xl text-5xl leading-[1.1] md:text-7xl">
             Lend your camera to a stranger.
             <br />

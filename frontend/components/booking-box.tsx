@@ -163,8 +163,11 @@ export function BookingBox({
         <span className="text-sm text-ink-muted">USDC per day</span>
       </div>
 
-      <div className="flex gap-3">
-        <label className="flex flex-1 flex-col gap-1">
+      {/* Two equal columns that are allowed to shrink. As flex items with the default
+          min-width of auto, the native date pickers refused to go below their own intrinsic
+          width, and the pair overflowed the 20rem card. */}
+      <div className="grid grid-cols-2 gap-3">
+        <label className="flex min-w-0 flex-col gap-1">
           <span className="text-xs text-ink-muted">From</span>
           <input
             type="date"
@@ -174,10 +177,10 @@ export function BookingBox({
             // picker offering yesterday is offering something that cannot be bought.
             min={chainToday}
             onChange={(e) => setStart(e.target.value)}
-            className="tabular rounded-control border border-line px-2 py-1.5 text-sm"
+            className="tabular w-full min-w-0 rounded-control border border-line px-2 py-1.5 text-sm"
           />
         </label>
-        <label className="flex flex-1 flex-col gap-1">
+        <label className="flex min-w-0 flex-col gap-1">
           <span className="text-xs text-ink-muted">To</span>
           <input
             type="date"
@@ -186,7 +189,7 @@ export function BookingBox({
             // and never before the chain thinks tomorrow is.
             min={start ? nextDay(start) : chainToday ? nextDay(chainToday) : undefined}
             onChange={(e) => setEnd(e.target.value)}
-            className="tabular rounded-control border border-line px-2 py-1.5 text-sm"
+            className="tabular w-full min-w-0 rounded-control border border-line px-2 py-1.5 text-sm"
           />
         </label>
       </div>
